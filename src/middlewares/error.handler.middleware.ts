@@ -17,6 +17,10 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
 
     // For unexpected errors, send a response
     res.status(500).send({
-        errors: [{ message: isProduction ? 'Something went wrong!!!' : err.message || 'Internal server error' }],
+        errors: [
+            {
+                message: isProduction ? 'Something went wrong!!!' : err.message || 'Internal server error',
+            },
+        ],
     });
 };

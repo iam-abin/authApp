@@ -4,7 +4,6 @@ import { UserSignInDto, UserSignupDto } from '../dto/auth.dto';
 import { IUser } from '../database/model';
 import { createJwtAccessToken } from '../utils/jwt';
 
-
 const authService = new AuthService();
 
 const signup = async (req: Request, res: Response): Promise<void> => {
@@ -20,7 +19,7 @@ const signin = async (req: Request, res: Response): Promise<void> => {
         email: user.email,
     };
     const jwt: string = createJwtAccessToken(userPayload);
-    res.status(200).json({ message: "login success", user, accessToken: jwt });
+    res.status(200).json({ message: 'login success', user, accessToken: jwt });
 };
 
 export default { signup, signin };

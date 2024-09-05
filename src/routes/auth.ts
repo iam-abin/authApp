@@ -3,7 +3,6 @@ import authController from '../controllers/auth.controller';
 import { signinRequestBodyValidator, signupRequestBodyValidator } from '../utils/user.validation';
 import { validateRequest } from '../middlewares';
 
-
 const router: Router = express.Router();
 
 // router.post('/signin',signinRequestBodyValidator, validateRequest, authController.signin);

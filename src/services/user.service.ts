@@ -1,8 +1,8 @@
-import { IUser } from "../database/model";
-import { UserRepository } from "../database/repository/user.repository";
-import { UserSignInDto, UserSignupDto } from "../dto/auth.dto";
-import { BadRequestError } from "../errors";
-import { comparePassword } from "../utils";
+import { IUser } from '../database/model';
+import { UserRepository } from '../database/repository/user.repository';
+import { UserSignInDto, UserSignupDto } from '../dto/auth.dto';
+import { BadRequestError } from '../errors';
+import { comparePassword } from '../utils';
 
 const userRepository = new UserRepository();
 

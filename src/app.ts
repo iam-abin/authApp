@@ -4,8 +4,9 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import { NotFoundError } from './errors';
-import { errorHandler } from './middlewares';
+import { errorHandler, IPayload, rateLimiter } from './middlewares';
 import userRouter from './routes/user';
+import { config } from './config/config';
 
 const app: Application = express();
 
@@ -22,8 +23,9 @@ app.use(
 );
 if (!isProductionENV) app.use(morgan('dev'));
 
+app.use(rateLimiter);
 // Routes
-app.use('/api', userRouter);
+app.use(`${config.API_BASE_PATH}`, userRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

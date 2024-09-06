@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { NotFoundError } from './errors';
 import { errorHandler } from './middlewares';
-import authRouter from './routes/auth';
+import userRouter from './routes/user';
 
 const app: Application = express();
 
@@ -23,8 +23,7 @@ app.use(
 if (!isProductionENV) app.use(morgan('dev'));
 
 // Routes
-
-app.use('/api/v1/auth', authRouter);
+app.use('/api', userRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

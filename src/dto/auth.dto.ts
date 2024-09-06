@@ -7,5 +7,4 @@ export type UserSignInDto = UserCredentialsDto;
 
 export interface UserSignupDto extends UserCredentialsDto {
     name: string;
-    role: string;
 }

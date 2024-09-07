@@ -5,7 +5,7 @@ import { winstonLogError } from '../utils';
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
     const isProduction = process.env.NODE_ENV === 'production';
 
-    console.log('isProduction ', isProduction, process.env.NODE_ENV);
+    // console.log('isProduction ', isProduction, process.env.NODE_ENV);
 
     // log the error details to the error.log file
     winstonLogError(err);
@@ -17,6 +17,10 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
 
     // For unexpected errors, send a response
     res.status(500).send({
-        errors: [{ message: isProduction ? 'Something went wrong!!!' : err.message || 'Internal server error' }],
+        errors: [
+            {
+                message: isProduction ? 'Something went wrong!!!' : err.message || 'Internal server error',
+            },
+        ],
     });
 };

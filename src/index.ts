@@ -7,8 +7,8 @@ import { config } from './config/config';
 
 connectDB();
 
-const PORT = config.port || 4000;
+const PORT: string | number = config.PORT;
 
-app.listen(PORT, () => {
+app.listen(PORT, (): void => {
     console.log(`Server is listening on port ${PORT}...`);
 });

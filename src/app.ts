@@ -6,7 +6,8 @@ import cors from 'cors';
 import { NotFoundError } from './errors';
 import { errorHandler, IPayload, rateLimiter } from './middlewares';
 import userRouter from './routes/user';
-import { config } from './config/config';
+import { appConfig } from './config/appConfig';
+import { swatterUIServe, swaggerUiSetup } from '../api_doc/swagger';
 
 const app: Application = express();
 
@@ -25,7 +26,8 @@ if (!isProductionENV) app.use(morgan('dev'));
 
 app.use(rateLimiter);
 // Routes
-app.use(`${config.API_BASE_PATH}`, userRouter);
+app.use(`${appConfig.API_BASE_PATH}`, userRouter);
+app.use(`${appConfig.API_BASE_PATH}/docs`, swatterUIServe, swaggerUiSetup);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

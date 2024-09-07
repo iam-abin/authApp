@@ -36,12 +36,12 @@ describe('/signup', () => {
         return request(app).post('/api/signup').send({}).expect(400);
     });
 
-    // it('returns a 201 for successful user creation', async () => {
-    //     return request(app)
-    //         .post('/api/signup')
-    //         .send({ name: "user", email: 'iamabin1100@gmail.com', password: 'password' })
-    //         .expect(201);
-    // });
+    it('returns a 201 for successful user creation', async () => {
+        return request(app)
+            .post('/api/signup')
+            .send({ name: 'testabin', email: 'testabin@gmail.com', password: 'password' })
+            .expect(201);
+    });
 });
 
 // describe('/api/profile', () => {

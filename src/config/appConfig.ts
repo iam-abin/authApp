@@ -1,4 +1,4 @@
-interface IConfig {
+interface IAppConfig {
     PORT: string | number;
     MONGO_URI: string;
     API_BASE_PATH: string;
@@ -9,7 +9,7 @@ interface IConfig {
     EMAIL_PASSWORD: string | undefined;
 }
 
-const config: IConfig = Object.freeze({
+const appConfig: IAppConfig = Object.freeze({
     PORT: process.env.PORT || 4000,
     MONGO_URI: process.env.MONGODB_CONNECTION_STRING as string,
     API_BASE_PATH: '/api',
@@ -20,4 +20,4 @@ const config: IConfig = Object.freeze({
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
 });
 
-export { config };
+export { appConfig };

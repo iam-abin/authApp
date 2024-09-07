@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { config } from '../config/config';
+import { appConfig } from '../config/appConfig';
 
 export interface IJwtPayload {
     userId: string;
@@ -8,8 +8,8 @@ export interface IJwtPayload {
 }
 
 export const createJwtAccessToken = (payload: IJwtPayload): string => {
-    const accessToken: string = jwt.sign(payload, config.JWT_SECRET as string, {
-        expiresIn: config.JWT_EXPIRY_TIME,
+    const accessToken: string = jwt.sign(payload, appConfig.JWT_SECRET as string, {
+        expiresIn: appConfig.JWT_EXPIRY_TIME,
     });
     return accessToken;
 };

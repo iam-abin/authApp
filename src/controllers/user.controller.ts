@@ -7,7 +7,7 @@ import createSuccessResponse from '../utils/response';
 const authService = new AuthService();
 
 const signup = async (req: Request, res: Response): Promise<void> => {
-    const user: IUser = await authService.signUp(req.body as UserSignupDto);
+    const user: IUser | undefined = await authService.signUp(req.body as UserSignupDto);
     res.status(201).json(createSuccessResponse('Signup success', user));
 };
 

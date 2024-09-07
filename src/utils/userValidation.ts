@@ -13,5 +13,4 @@ export const signupRequestBodyValidator = [
         .isLength({ min: 4, max: 20 })
         .withMessage('Password must be between 4 and 20 characters')
         .escape(), // used to sanitize input by escaping characters that could be used in cross-site scripting (XSS) attacks or other injection vulnerabilities.
-    // validateRequest,
 ];

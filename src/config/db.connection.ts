@@ -5,7 +5,7 @@ import { config } from './config';
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(config.MONGO_URI);
+        await mongoose.connect(config.MONGO_URI, { retryWrites: true, w: 'majority' });
         console.log('connected to mongodb...🛢');
     } catch (error) {
         console.log(error);

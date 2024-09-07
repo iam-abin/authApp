@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
 
-interface IJwtPayload {
+export interface IJwtPayload {
     userId: string;
     name: string;
     email: string;

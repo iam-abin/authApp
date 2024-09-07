@@ -18,13 +18,13 @@ beforeEach(async () => {
     const db = mongoose.connection.db;
     if (db) {
         const collections = await db.collections();
-        console.log('Mongodb connected');
+        // console.log('connected to MongoMemoryServer...🛢');
 
         for (const collection of collections) {
             await collection.deleteMany({});
         }
     } else {
-        throw new Error('MongoDB connection is not established');
+        throw new Error('Error connecting to MongoMemoryServer');
     }
 });
 

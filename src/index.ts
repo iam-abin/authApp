@@ -3,11 +3,11 @@ dotenv.config();
 
 import { app } from './app';
 import { connectDB } from './config/db.connection';
-import { config } from './config/config';
+import { appConfig } from './config/appConfig';
 
 connectDB();
 
-const PORT: string | number = config.PORT;
+const PORT: string | number = appConfig.PORT;
 
 app.listen(PORT, (): void => {
     console.log(`Server is listening on port ${PORT}...`);

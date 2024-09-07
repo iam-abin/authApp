@@ -12,5 +12,5 @@ const winstonLogger: Logger = createLogger({
 });
 
 export const winstonLogError = (err: Error): void => {
-    winstonLogger.error(`💥 ${err}\n${err.stack}`);
+    if (process.env.NODE_ENV !== 'test') winstonLogger.error(`💥 ${err}\n${err.stack}`);
 };

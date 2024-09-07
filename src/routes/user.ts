@@ -5,7 +5,7 @@ import { auth, validateRequest } from '../middlewares';
 
 const router: Router = express.Router();
 
-router.post('/signin', signinRequestBodyValidator, validateRequest, userController.signin);
+router.post('/login', signinRequestBodyValidator, validateRequest, userController.signin);
 
 router.post('/signup', signupRequestBodyValidator, validateRequest, userController.signup);
 

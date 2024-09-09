@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import 'reflect-metadata';
 import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -7,7 +8,7 @@ import { NotFoundError } from './errors';
 import { errorHandler, IPayload, rateLimiter } from './middlewares';
 import userRouter from './routes/user';
 import { appConfig } from './config/appConfig';
-import { swatterUIServe, swaggerUiSetup } from '../api_doc/swagger';
+import { swatterUIServe, swaggerUiSetup } from '../doc/swagger';
 
 const app: Application = express();
 

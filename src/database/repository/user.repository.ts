@@ -1,6 +1,8 @@
+import { injectable } from 'tsyringe';
 import { UserSignupDto } from '../../dto/auth.dto';
 import { IUser, UserModel } from '../model';
 
+@injectable()
 export class UserRepository {
     async createUser(userData: UserSignupDto): Promise<IUser> {
         const newUser = await UserModel.create(userData);

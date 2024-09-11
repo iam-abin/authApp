@@ -1,27 +1,60 @@
 import { autoInjectable } from 'tsyringe';
-import { IUser } from '../database/model';
+import { IOtp, IUser } from '../database/model';
 import { UserSignInDto, UserSignupDto } from '../dto/auth.dto';
-import { BadRequestError } from '../errors';
+import { BadRequestError, NotAuthorizedError, NotFoundError } from '../errors';
 import { comparePassword, createJwtAccessToken, IJwtPayload, sendConfirmationEmail } from '../utils';
-import { UserRepository } from '../database/repository';
+import { OtpRepository, UserRepository } from '../database/repository';
+import mongoose from 'mongoose';
+import { generateOtp } from '../utils/otp';
 
 @autoInjectable()
 export class UserService {
-    constructor(private readonly userRepository: UserRepository) {}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly otpRepository: OtpRepository,
+    ) {}
 
     public async signUp(userRegisterDto: UserSignupDto): Promise<IUser> {
         const { email } = userRegisterDto;
+        // Start a session
+        const session = await mongoose.startSession();
+        session.startTransaction();
 
-        const existingUser: IUser | null = await this.userRepository.findByEmail(email);
-        if (existingUser) throw new BadRequestError('User already exists');
+        try {
+            const existingUser: IUser | null = await this.userRepository.findByEmail(email);
+            // If you already created account but not verified.
+            if (existingUser && !existingUser.isVerified) {
+                const otp: string = generateOtp();
+                const savedOtp: IOtp = await this.otpRepository.createOtp({
+                    userId: existingUser._id as string,
+                    otp,
+                });
 
-        const createdUser = await this.userRepository.createUser(userRegisterDto);
+                await sendConfirmationEmail(email, savedOtp.otp);
+                // Commit the transaction
+                await session.commitTransaction();
+                session.endSession();
+                return existingUser;
+            }
 
-        const SUBJECT = 'Innobyte User App Confirmation';
-        const TOPIC = 'Innobyte User App Confirmation 2';
+            if (existingUser && existingUser.isVerified) throw new BadRequestError('User already exists');
 
-        await sendConfirmationEmail(email, SUBJECT, TOPIC);
-        return createdUser;
+            const user = await this.userRepository.createUser(userRegisterDto, session);
+
+            const otp: string = generateOtp();
+            const savedOtp = await this.otpRepository.createOtp({ userId: user._id as string, otp }, session);
+
+            await sendConfirmationEmail(email, savedOtp.otp);
+            // Commit the transaction
+            await session.commitTransaction();
+            return user;
+        } catch (error) {
+            // Rollback the transaction if something goes wrong
+            await session.abortTransaction();
+            throw error;
+        } finally {
+            session.endSession();
+        }
     }
 
     public async signIn(userSignInDto: UserSignInDto): Promise<{ user: IUser; accessToken: string }> {
@@ -31,6 +64,11 @@ export class UserService {
         if (!existingUser) throw new BadRequestError('Invalid email or password');
         const isSamePassword: boolean = await comparePassword(password, existingUser.password);
         if (!isSamePassword) throw new BadRequestError('Invalid email or password');
+        if (!existingUser.isVerified) {
+            throw new NotAuthorizedError(
+                'You are not verified yet. Pleas verify by signup again to get otp.',
+            );
+        }
 
         const userPayload: IJwtPayload = {
             userId: existingUser._id as string,
@@ -44,7 +82,7 @@ export class UserService {
 
     public async getProfile(userId: string): Promise<IUser | null> {
         const user: IUser | null = await this.userRepository.findUserById(userId);
-        if (!user) throw new BadRequestError('This user does not exist');
+        if (!user) throw new NotFoundError('This user does not exist');
         return user;
     }
 }

@@ -43,6 +43,21 @@ or
  npm start
 ```
 
+- In postman access the application by using,
+
+```
+http://localhost:3000/api/*
+```
 
 ## Api Doc
+
+- swagger 
+
+```
+http://localhost:3000/api/docs
+```
+
+- postman
+
+https://documenter.getpostman.com/view/26404406/2sAXqmAjrD
 

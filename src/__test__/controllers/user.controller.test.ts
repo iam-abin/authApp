@@ -19,7 +19,7 @@ const mockSignInDto: UserSignInDto = { email: 'test@example.com', password: 'tes
 
 const mockedUserService = container.resolve(UserService) as jest.Mocked<UserService>;
 
-describe('UserController /api/login', () => {
+describe('/api/login', () => {
     it('should return 400 if email is not provided', async () => {
         await request(app).post('/api/login').send({ password: 'test' }).expect(400);
     });
@@ -38,7 +38,7 @@ describe('UserController /api/login', () => {
     });
 });
 
-describe('UserController /api/signup', () => {
+describe('/api/signup', () => {
     it('should return 400 if name is not provided', async () => {
         await request(app)
             .post('/api/signup')

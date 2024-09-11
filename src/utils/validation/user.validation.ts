@@ -6,7 +6,7 @@ export const signinRequestBodyValidator = [
 ];
 
 export const signupRequestBodyValidator = [
-    body('name').notEmpty().withMessage('Name is requires').trim().escape(),
+    body('name').notEmpty().withMessage('Name is required').trim().escape(),
     body('email').isEmail().withMessage('Email must be valid').trim().escape(),
     body('password')
         .trim()

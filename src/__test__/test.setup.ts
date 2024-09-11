@@ -3,13 +3,12 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // Initialize and start the MongoDB memory-server before all tests start
 let mongo: MongoMemoryServer | undefined;
-beforeAll(async () => {
-    process.env.JWT_KEY = 'jnadkf';
 
+beforeAll(async () => {
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
 
-    await mongoose.connect(mongoUri, {});
+    await mongoose.connect(mongoUri);
 });
 
 // Before each test starts, delete all data inside the MongoDB database

@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { CustomError } from '../errors';
 import { winstonLogError } from '../utils';
+import { appConfig } from '../config/appConfig';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    const isProduction = process.env.NODE_ENV === 'production';
-
-    // console.log('isProduction ', isProduction, process.env.NODE_ENV);
+    const isProduction = appConfig.NODE_ENVIRONMENT === 'production';
 
     // log the error details to the error.log file
     winstonLogError(err);

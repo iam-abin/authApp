@@ -3,17 +3,14 @@ import { IUser, UserModel } from '../model';
 
 export class UserRepository {
     async createUser(userData: UserSignupDto): Promise<IUser> {
-        const newUser = await UserModel.create(userData);
-        return newUser;
+        return await UserModel.create(userData);
     }
 
     async findByEmail(email: string): Promise<IUser | null> {
-        const user = await UserModel.findOne({ email });
-        return user;
+        return await UserModel.findOne({ email });
     }
 
     async findUserById(userId: string): Promise<IUser | null> {
-        const user = await UserModel.findById(userId);
-        return user;
+        return await UserModel.findById(userId);
     }
 }

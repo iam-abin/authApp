@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import userController from '../controllers/user.controller';
+import { userController } from '../controllers/user.controller';
 import { signinRequestBodyValidator, signupRequestBodyValidator } from '../utils/userValidation';
 import { auth, validateRequest } from '../middlewares';
 
@@ -11,4 +11,4 @@ router.post('/signup', signupRequestBodyValidator, validateRequest, userControll
 
 router.get('/profile', auth, userController.profile);
 
-export default router;
+export { router as userRoute };

@@ -10,7 +10,8 @@
     "precommit": "lint-staged",
     "dev": "NODE_ENV=development nodemon src/index.ts",
     "test": "NODE_ENV=test jest",
-    "build": "tsc",
+    "build": "tsc && npm run copy-swagger",
+    "copy-swagger": "copyfiles -u 1 doc/swagger.yaml build/doc/",
     "start": "npm run build && NODE_ENV=production node build/src/index.js"
   },
   "author": "abin",
@@ -40,7 +41,9 @@
     "mongodb-memory-server": "^10.0.0",
     "mongoose": "^8.6.0",
     "nodemailer": "^6.9.15",
+    "reflect-metadata": "^0.2.2",
     "swagger-ui-express": "^5.0.1",
+    "tsyringe": "^4.8.0",
     "winston": "^3.14.2",
     "yamljs": "^0.3.0"
   },
@@ -59,6 +62,7 @@
     "@types/supertest": "^6.0.2",
     "@types/swagger-ui-express": "^4.1.6",
     "@types/yamljs": "^0.2.34",
+    "copyfiles": "^2.4.1",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
     "husky": "^9.1.5",

@@ -1,18 +1,18 @@
-import 'express-async-errors';
 import 'reflect-metadata';
+import 'express-async-errors';
 import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import { NotFoundError } from './errors';
-import { errorHandler, IPayload, rateLimiter } from './middlewares';
-import userRouter from './routes/user';
+import { errorHandler, rateLimiter } from './middlewares';
+import { userRoute } from './routes/user';
 import { appConfig } from './config/appConfig';
 import { swatterUIServe, swaggerUiSetup } from '../doc/swagger';
 
 const app: Application = express();
 
-const isProductionENV: boolean = process.env.NODE_ENV === 'production';
+const isProductionENV: boolean = appConfig.NODE_ENVIRONMENT === 'production';
 
 // Middlewares
 app.use(express.json());
@@ -27,7 +27,7 @@ if (!isProductionENV) app.use(morgan('dev'));
 
 app.use(rateLimiter);
 // Routes
-app.use(`${appConfig.API_BASE_PATH}`, userRouter);
+app.use(`${appConfig.API_BASE_PATH}`, userRoute);
 app.use(`${appConfig.API_BASE_PATH}/docs`, swatterUIServe, swaggerUiSetup);
 
 app.all('*', (req: Request, res: Response) => {

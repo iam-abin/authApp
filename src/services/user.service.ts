@@ -1,13 +1,13 @@
-import { inject, injectable } from 'tsyringe';
+import { autoInjectable } from 'tsyringe';
 import { IUser } from '../database/model';
 import { UserSignInDto, UserSignupDto } from '../dto/auth.dto';
 import { BadRequestError } from '../errors';
 import { comparePassword, createJwtAccessToken, IJwtPayload, sendConfirmationEmail } from '../utils';
 import { UserRepository } from '../database/repository';
 
-@injectable()
-export class AuthService {
-    constructor(@inject(UserRepository) private userRepository: UserRepository) {}
+@autoInjectable()
+export class UserService {
+    constructor(private readonly userRepository: UserRepository) {}
 
     public async signUp(userRegisterDto: UserSignupDto): Promise<IUser> {
         const { email } = userRegisterDto;

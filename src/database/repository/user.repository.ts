@@ -1,21 +1,16 @@
-import { injectable } from 'tsyringe';
 import { UserSignupDto } from '../../dto/auth.dto';
 import { IUser, UserModel } from '../model';
 
-@injectable()
 export class UserRepository {
     async createUser(userData: UserSignupDto): Promise<IUser> {
-        const newUser = await UserModel.create(userData);
-        return newUser;
+        return await UserModel.create(userData);
     }
 
     async findByEmail(email: string): Promise<IUser | null> {
-        const user = await UserModel.findOne({ email });
-        return user;
+        return await UserModel.findOne({ email });
     }
 
     async findUserById(userId: string): Promise<IUser | null> {
-        const user = await UserModel.findById(userId);
-        return user;
+        return await UserModel.findById(userId);
     }
 }

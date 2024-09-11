@@ -1,4 +1,5 @@
 import { createLogger, transports, format, Logger } from 'winston';
+import { appConfig } from '../config/appConfig';
 const { combine, timestamp, printf } = format;
 
 const myFormat = printf(({ level, message, timestamp }) => {
@@ -12,5 +13,5 @@ const winstonLogger: Logger = createLogger({
 });
 
 export const winstonLogError = (err: Error): void => {
-    if (process.env.NODE_ENV !== 'test') winstonLogger.error(`💥 ${err}\n${err.stack}`);
+    if (appConfig.NODE_ENVIRONMENT !== 'test') winstonLogger.error(`💥 ${err}\n${err.stack}`);
 };

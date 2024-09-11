@@ -1,10 +1,13 @@
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { getEmailVerificationTemplate } from '../templates/verificationEmail';
+import { appConfig } from '../config/appConfig';
+
+const SUBJECT = 'InnobyteUserApp Confirmation';
 
 export const sendConfirmationEmail = async (
     toEmail: string,
-    subject: string,
-    text: string,
+    otp: string,
 ): Promise<SMTPTransport.SentMessageInfo> => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -12,21 +15,20 @@ export const sendConfirmationEmail = async (
         port: 587,
         secure: false,
         auth: {
-            user: 'abinvarghese273@gmail.com',
-            pass: 'rpih sgvo uxme sqnl',
+            user: appConfig.EMAIL_USER,
+            pass: appConfig.EMAIL_PASSWORD,
         },
         connectionTimeout: 10000,
     });
 
+    const emailTemplate: { html: string; text: string } = getEmailVerificationTemplate(otp);
+
     const mailOptions = {
-        from: 'innobyteAuthApp abinvarghese273@gmail.com',
+        from: `innobyteUserApp ${appConfig.EMAIL_USER}`,
         to: toEmail,
-        subject: subject,
-        text: text,
-        html: `
-		<h3> Innobyte Registration confirmation</h3><br/>
-		<p> You successfully registered to innobyte auth application.</p>
-	  `,
+        subject: SUBJECT,
+        text: emailTemplate.text,
+        html: emailTemplate.html,
     };
 
     const info = await transporter.sendMail(mailOptions);

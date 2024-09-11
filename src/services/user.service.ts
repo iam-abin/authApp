@@ -1,7 +1,7 @@
 import { autoInjectable } from 'tsyringe';
 import { IUser } from '../database/model';
 import { UserSignInDto, UserSignupDto } from '../dto/auth.dto';
-import { BadRequestError } from '../errors';
+import { BadRequestError, NotFoundError } from '../errors';
 import { comparePassword, createJwtAccessToken, IJwtPayload, sendConfirmationEmail } from '../utils';
 import { UserRepository } from '../database/repository';
 
@@ -44,7 +44,7 @@ export class UserService {
 
     public async getProfile(userId: string): Promise<IUser | null> {
         const user: IUser | null = await this.userRepository.findUserById(userId);
-        if (!user) throw new BadRequestError('This user does not exist');
+        if (!user) throw new NotFoundError('This user does not exist');
         return user;
     }
 }

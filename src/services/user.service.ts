@@ -16,13 +16,12 @@ export class UserService {
 
     public async signUp(userRegisterDto: UserSignupDto): Promise<IUser> {
         const { email } = userRegisterDto;
-        // Start a session
         const session = await mongoose.startSession();
         session.startTransaction();
 
         try {
             const existingUser: IUser | null = await this.userRepository.findByEmail(email);
-            // If you already created account but not verified.
+            // If the user already exists but is not verified
             if (existingUser && !existingUser.isVerified) {
                 const otp: string = generateOtp();
                 const savedOtp: IOtp = await this.otpRepository.createOtp({
@@ -37,14 +36,15 @@ export class UserService {
                 return existingUser;
             }
 
-            if (existingUser && existingUser.isVerified) throw new BadRequestError('User already exists');
+            // If the user is already verified, throw an error
+            if (existingUser) throw new BadRequestError('User already exists');
 
+            // Create a new user and generate OTP and send confirmation email
             const user = await this.userRepository.createUser(userRegisterDto, session);
-
             const otp: string = generateOtp();
             const savedOtp = await this.otpRepository.createOtp({ userId: user._id as string, otp }, session);
-
             await sendConfirmationEmail(email, savedOtp.otp);
+
             // Commit the transaction
             await session.commitTransaction();
             return user;
@@ -60,16 +60,22 @@ export class UserService {
     public async signIn(userSignInDto: UserSignInDto): Promise<{ user: IUser; accessToken: string }> {
         const { email, password } = userSignInDto;
 
+        // Check if the user exists
         const existingUser: IUser | null = await this.userRepository.findByEmail(email);
         if (!existingUser) throw new BadRequestError('Invalid email or password');
+
+        // Check if the password is correct
         const isSamePassword: boolean = await comparePassword(password, existingUser.password);
         if (!isSamePassword) throw new BadRequestError('Invalid email or password');
+
+        // Check if the user is verified
         if (!existingUser.isVerified) {
             throw new NotAuthorizedError(
                 'You are not verified yet. Pleas verify by signup again to get otp.',
             );
         }
 
+        // Generate JWT
         const userPayload: IJwtPayload = {
             userId: existingUser._id as string,
             name: existingUser.name,

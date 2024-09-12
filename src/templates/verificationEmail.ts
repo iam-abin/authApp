@@ -24,7 +24,7 @@ export const getEmailVerificationTemplate = function (otp: string) {
     <div style="border-bottom:1px solid #eee">
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">UserApp</a>
     </div>
-    <p style="font-size:1.1em">Hi,</p>Elevate
+    <p style="font-size:1.1em">Hi,</p>UserApp
     <p>Thank you for choosing Innobyte UserApp. Use the following OTP to complete your Sign Up procedures.
     This OTP is valid for 10 minutes from the time this email was sent. After this period, You need to click on resend 
     OTP or need to signup again to verify your email.

@@ -1,5 +1,7 @@
-# Auth Application
+# UserApp
 
+This is a user application where users can signup, verify and view their profile.
+(Error catching is the async functions are done using 'express-async-errors').
 
 ## Prerequisites
 

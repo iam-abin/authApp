@@ -64,6 +64,28 @@ components:
         - email
         - password
 
+    VerifyOtpDto:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: User ID
+        otp:
+          type: string
+          description: OTP code
+      required:
+        - userId
+        - otp
+
+    ResendOtpDto:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: User ID
+      required:
+        - userId
+
     SuccessResponse:
       type: object
       properties:
@@ -167,6 +189,56 @@ paths:
                 $ref: "#/components/schemas/Error"
         "404":
           description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/verify-otp:
+    post:
+      tags:
+        - Auth
+      summary: Verify the OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyOtpDto"
+      responses:
+        "200":
+          description: OTP verified successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Invalid OTP or bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/resend-otp:
+    post:
+      tags:
+        - Auth
+      summary: Resend OTP to the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResendOtpDto"
+      responses:
+        "200":
+          description: OTP resent successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Bad request or user already verified
           content:
             application/json:
               schema:

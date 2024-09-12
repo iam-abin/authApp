@@ -8,9 +8,9 @@ export const verifyOtpRequestBodyValidator = [
         .isLength({ min: 6, max: 6 })
         .withMessage('Otp length must be 6')
         .escape(),
-    body('userId').notEmpty().withMessage('userId is required').trim().escape(),
+    body('userId').isMongoId().withMessage('Invalid ID format').trim().escape(),
 ];
 
 export const resendOtpRequestBodyValidator = [
-    body('userId').notEmpty().withMessage('userId is required').trim().escape(),
+    body('userId').isMongoId().withMessage('Invalid ID format').trim().escape(),
 ];

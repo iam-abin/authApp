@@ -1,5 +1,5 @@
 import { ClientSession } from 'mongoose';
-import { OtpDto } from '../../dto/otp';
+import { OtpDto } from '../../dto/otp.dto';
 import { IOtp, OtpModel } from '../model';
 
 export class OtpRepository {

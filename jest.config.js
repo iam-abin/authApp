@@ -2,7 +2,7 @@
 module.exports = {
     testEnvironment: 'node',
     transform: {
-        '^.+.tsx?$': ['ts-jest', {}],
+        '^.+.ts?$': ['ts-jest', {}],
     },
     setupFilesAfterEnv: ['./src/__test__/test.setup.ts'],
     testPathIgnorePatterns: ["/node_modules/", "/build/"],

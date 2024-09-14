@@ -14,7 +14,7 @@ export class UserService {
         private readonly otpRepository: OtpRepository,
     ) {}
 
-    public async signUp(userRegisterDto: UserSignupDto): Promise<IUser> {
+    public async signUp(userRegisterDto: UserSignupDto): Promise<IUser | null> {
         const { email } = userRegisterDto;
         const session = await mongoose.startSession();
         session.startTransaction();
@@ -24,16 +24,26 @@ export class UserService {
             // If the user already exists but is not verified
             if (existingUser && !existingUser.isVerified) {
                 const otp: string = generateOtp();
-                const savedOtp: IOtp = await this.otpRepository.createOtp({
-                    userId: existingUser._id as string,
-                    otp,
-                });
+                const savedOtp: IOtp = await this.otpRepository.createOtp(
+                    {
+                        userId: existingUser._id as string,
+                        otp,
+                    },
+                    session,
+                );
+
+                // Update if user enter new name or password
+                const updatedUser: IUser | null = await this.userRepository.updateUser(
+                    existingUser._id as string,
+                    userRegisterDto,
+                    session,
+                );
 
                 await sendConfirmationEmail(email, savedOtp.otp);
                 // Commit the transaction
                 await session.commitTransaction();
                 session.endSession();
-                return existingUser;
+                return updatedUser;
             }
 
             // If the user is already verified, throw an error

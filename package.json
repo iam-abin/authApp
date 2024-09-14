@@ -10,6 +10,7 @@
     "precommit": "lint-staged",
     "dev": "NODE_ENV=development nodemon src/index.ts",
     "test": "NODE_ENV=test jest",
+    "test:watch": "jest --watchAll",
     "build": "tsc && npm run copy-swagger",
     "copy-swagger": "copyfiles -u 1 doc/swagger.yaml build/doc/",
     "start": "npm run build && NODE_ENV=production node build/src/index.js"

@@ -27,8 +27,8 @@ if (!isProductionENV) app.use(morgan('dev'));
 
 app.use(rateLimiter);
 // Routes
-app.use(`${appConfig.API_BASE_PATH}`, userRoute);
-app.use(`${appConfig.API_BASE_PATH}/docs`, swatterUIServe, swaggerUiSetup);
+app.use(`${appConfig.API_PREFIX}`, userRoute);
+app.use(`${appConfig.API_PREFIX}/docs`, swatterUIServe, swaggerUiSetup);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

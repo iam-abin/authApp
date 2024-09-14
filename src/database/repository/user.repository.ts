@@ -15,6 +15,13 @@ export class UserRepository {
     async findUserById(userId: string): Promise<IUser | null> {
         return await UserModel.findById(userId);
     }
+    async updateUser(
+        userId: string,
+        updateData: Partial<UserSignupDto>,
+        session?: ClientSession,
+    ): Promise<IUser | null> {
+        return await UserModel.findByIdAndUpdate(userId, updateData, { new: true, session });
+    }
 
     async updateUserVerification(userId: string): Promise<IUser | null> {
         return await UserModel.findByIdAndUpdate(userId, { isVerified: true }, { new: true });

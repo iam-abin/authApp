@@ -13,3 +13,8 @@ export const createJwtAccessToken = (payload: IJwtPayload): string => {
     });
     return accessToken;
 };
+
+export const verifyJwtToken = (token: string): IJwtPayload => {
+    const decodedData = jwt.verify(token, appConfig.JWT_SECRET!) as IJwtPayload;
+    return decodedData;
+};

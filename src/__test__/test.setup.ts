@@ -1,5 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+
+// declare global {
+//     namespace NodeJS {
+//       interface Global {
+//         signin(): string;
+//       }
+//     }
+//   }
 
 // Initialize and start the MongoDB memory-server before all tests start
 let mongo: MongoMemoryServer | undefined;
@@ -13,6 +23,7 @@ beforeAll(async () => {
 
 // Before each test starts, delete all data inside the MongoDB database
 beforeEach(async () => {
+    jest.clearAllMocks();
     // Ensure connection and database exist
     const db = mongoose.connection.db;
     if (db) {

@@ -8,12 +8,12 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write 'src/**/*.ts'",
     "precommit": "lint-staged",
-    "dev": "NODE_ENV=development nodemon src/index.ts",
-    "test": "NODE_ENV=test jest",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watchAll",
     "build": "tsc && npm run copy-swagger",
     "copy-swagger": "copyfiles -u 1 doc/swagger.yaml build/doc/",
-    "start": "npm run build && NODE_ENV=production node build/src/index.js"
+    "start": "npm run build && cross-env NODE_ENV=production node build/src/index.js"
   },
   "author": "abin",
   "license": "ISC",
@@ -66,6 +66,7 @@
     "@types/swagger-ui-express": "^4.1.6",
     "@types/yamljs": "^0.2.34",
     "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
     "husky": "^9.1.5",

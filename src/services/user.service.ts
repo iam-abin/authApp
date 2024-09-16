@@ -74,16 +74,16 @@ export class UserService {
         const existingUser: IUser | null = await this.userRepository.findByEmail(email);
         if (!existingUser) throw new BadRequestError('Invalid email or password');
 
-        // Check if the password is correct
-        const isSamePassword: boolean = await comparePassword(password, existingUser.password);
-        if (!isSamePassword) throw new BadRequestError('Invalid email or password');
-
         // Check if the user is verified
         if (!existingUser.isVerified) {
             throw new NotAuthorizedError(
                 'You are not verified yet. Pleas verify by signup again to get otp.',
             );
         }
+
+        // Check if the password is correct
+        const isSamePassword: boolean = await comparePassword(password, existingUser.password);
+        if (!isSamePassword) throw new BadRequestError('Invalid email or password');
 
         // Generate JWT
         const userPayload: IJwtPayload = {

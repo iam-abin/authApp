@@ -3,7 +3,7 @@ import { CustomError } from '../errors';
 import { winstonLogError } from '../utils';
 import { appConfig } from '../config/appConfig';
 
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
     const isProduction = appConfig.NODE_ENVIRONMENT === 'production';
 
     // log the error details to the error.log file
@@ -11,7 +11,8 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
 
     // Handle custom errors
     if (err instanceof CustomError) {
-        return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+        res.status(err.statusCode).send({ errors: err.serializeErrors() });
+        return;
     }
 
     // For unexpected errors, send a response

@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+export const auth = (req: Request, res: Response, next: NextFunction): void => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', '');
         if (!token) throw new NotAuthorizedError('UnAuthorized Request');

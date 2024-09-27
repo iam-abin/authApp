@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app'; // Import your app here
-import { OtpService, UserService } from '../../services';
+import { UserService } from '../../services';
 import { container } from 'tsyringe';
 import { IUser } from '../../database/model';
 import { UserSignupDto, UserSignInDto } from '../../dto/auth.dto';
@@ -58,7 +58,7 @@ describe('/api/login', () => {
             accessToken: mockAccessToken,
         });
 
-        const response = await request(app).post('/api/login').send(mockSignInDto).expect(200);
+        await request(app).post('/api/login').send(mockSignInDto).expect(200);
     });
 });
 
@@ -136,7 +136,7 @@ describe('/api/profile', () => {
         const token = signin();
         mockedUserService.getProfile.mockResolvedValue(mockUser);
 
-        const response = await request(app).get('/api/profile').set('Authorization', token).expect(200);
+        await request(app).get('/api/profile').set('Authorization', token).expect(200);
     });
 
     it('returns a 401 if not authorized', async () => {

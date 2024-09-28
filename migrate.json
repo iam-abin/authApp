@@ -1,0 +1,5 @@
+{
+    "migrationsDir": "./migrations",
+    "template": "ts",
+    "collection": "migrations"
+  }

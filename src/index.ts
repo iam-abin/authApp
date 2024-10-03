@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { app } from './app';
-import { connectDB } from './config/db.connection';
+import { connectDb } from './config/db.connection';
 import { appConfig } from './config/appConfig';
 
-connectDB();
+connectDb();
 
 const PORT: string | number = appConfig.PORT;
 

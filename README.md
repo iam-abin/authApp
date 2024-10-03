@@ -63,3 +63,18 @@ http://localhost:3000/api/docs
 
 https://documenter.getpostman.com/view/26404406/2sAXqmAjrD
 
+
+
+## migrations
+
+- migration up
+
+```
+npx ts-migrate-mongoose up name_to_first_name_and_last_name --uri add_your_mongoURI
+```
+
+- migration down
+
+```
+npx ts-migrate-mongoose down name_to_first_name_and_last_name --uri add_your_mongoURI
+```

@@ -30,7 +30,7 @@ app.use(rateLimiter);
 app.use(`${appConfig.API_PREFIX}`, userRoute);
 app.use(`${appConfig.API_PREFIX}/docs`, swatterUIServe, swaggerUiSetup);
 
-app.all('*', (req: Request, res: Response) => {
+app.all('*', (req: Request, res: Response): never => {
     throw new NotFoundError();
 });
 

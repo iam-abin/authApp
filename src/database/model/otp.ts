@@ -16,6 +16,8 @@ const otpSchema = new Schema<IOtp>(
         otp: {
             type: String,
             required: true,
+            minlength: 6,
+            maxlength: 6,
         },
         createdAt: {
             type: Date,

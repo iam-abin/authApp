@@ -101,3 +101,10 @@ npx ts-migrate-mongoose up name_to_first_name_and_last_name --uri add_your_mongo
 ```
 npx ts-migrate-mongoose down name_to_first_name_and_last_name --uri add_your_mongoURI
 ```
+
+
+### docker image development and production size difference
+
+![Screenshot from 2024-10-22 19-30-40](https://github.com/user-attachments/assets/f8bcf670-f43a-44eb-8516-431888cc990b)
+
+

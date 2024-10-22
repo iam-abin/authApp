@@ -1,0 +1,15 @@
+services:
+  auth:
+    image: auth-app-dev
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    container_name: auth-container-dev
+    restart: always
+    env_file:
+      - .env.development
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000

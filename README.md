@@ -31,32 +31,55 @@ cd authApp
 npm install 
 ```
 
-4. Set up the required environment variables. Rename the `.env.example` file to `.env` and provide the necessary values for the environment.
+4. Set up the required environment variables. Rename the `.env.example` file to `.env.development` or `.env.production` or create both and provide the necessary values for the environment.
 
 5. Start server (Running the app):
-
+***for development environment***
 ```
  npm run dev
 ```
 
 or
+***for production environment***
+```
+ npm run build
+```
 
 ```
  npm start
 ```
 
-- In postman access the application by using,
+6. In postman access the application by using,
 
 ```
-http://localhost:3000/api/*
+http://localhost:5000/api/*
 ```
+
+
+## using Makefile commands
+- Here we use 'make' keyword to execute commands.
+
+- To see all available commands:
+```
+make help
+```
+- To start the development services:
+```
+make up-dev
+```
+- To stop the development services:
+```
+make down-dev
+```
+- like this we can use other commands
+
 
 ## Api Doc
 
 - swagger 
 
 ```
-http://localhost:3000/api/docs
+http://localhost:5000/api/docs
 ```
 
 - postman

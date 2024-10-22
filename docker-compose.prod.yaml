@@ -1,0 +1,12 @@
+services:
+  auth:
+    image: auth-app-prod
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.prod
+    container_name: auth-container-prod
+    restart: on-failure
+    env_file:
+      - .env.production
+    ports:
+      - 3000:3000

@@ -12,15 +12,18 @@ const otpSchema = new Schema<IOtp>(
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
+            index: true,
         },
         otp: {
             type: String,
             required: true,
+            minlength: 6,
+            maxlength: 6,
         },
         createdAt: {
             type: Date,
             default: Date.now(),
-            expires: 600, // TTL: 10 minutes (600 seconds)
+            expires: 600, // TTL index: 10 minutes (600 seconds)
         },
     },
     {

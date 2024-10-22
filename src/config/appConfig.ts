@@ -10,7 +10,7 @@ interface IAppConfig {
     EMAIL_PASSWORD: string | undefined;
 }
 
-const appConfig: IAppConfig = Object.freeze({
+const appConfig: Readonly<IAppConfig> = Object.freeze({
     PORT: process.env.PORT || 4000,
     MONGO_URI: process.env.MONGODB_CONNECTION_STRING as string,
     NODE_ENVIRONMENT: process.env.NODE_ENV as string,

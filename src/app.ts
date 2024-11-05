@@ -14,6 +14,9 @@ const app: Application = express();
 
 const isProductionENV: boolean = appConfig.NODE_ENVIRONMENT === 'production';
 
+// Set trust proxy
+app.set('trust proxy', true); // Trust all proxies
+
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

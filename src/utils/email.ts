@@ -3,7 +3,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { getEmailVerificationTemplate } from '../templates/verificationEmail';
 import { appConfig } from '../config/appConfig';
 
-const SUBJECT = 'InnobyteUserApp Confirmation';
+const SUBJECT = 'UserAuthApp Confirmation';
 
 export const sendConfirmationEmail = async (
     toEmail: string,
@@ -24,7 +24,7 @@ export const sendConfirmationEmail = async (
     const emailTemplate: { html: string; text: string } = getEmailVerificationTemplate(otp);
 
     const mailOptions = {
-        from: `innobyteUserApp ${appConfig.EMAIL_USER}`,
+        from: `UserAuthApp ${appConfig.EMAIL_USER}`,
         to: toEmail,
         subject: SUBJECT,
         text: emailTemplate.text,

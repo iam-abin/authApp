@@ -1,5 +1,5 @@
 {
-  "name": "innobyte_user_app",
+  "name": "user_auth_app",
   "version": "1.0.0",
   "main": "build/index.js",
   "scripts": {

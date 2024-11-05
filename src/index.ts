@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 import { appConfig } from './config/appConfig';
-
 import { app } from './app';
 import { connectDb } from './config/db.connection';
 
